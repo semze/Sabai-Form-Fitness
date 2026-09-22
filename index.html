@@ -1002,6 +1002,27 @@
       letter-spacing: 0.02em;
     }
 
+    /* Ensure containers keep horizontal padding so content stays centered */
+    .container { padding: 0 1rem; }
+    .hero-content { padding: 0 1rem; }
+
+    /* When JS marks .is-mobile, apply compact paddings and scale text for better fit */
+    .is-mobile .hero { padding: 4.5rem 0.9rem 2rem !important; }
+    .is-mobile .hero-content { gap: 1rem !important; padding: 0 0.75rem !important; }
+    .is-mobile .hero-text { text-align: center; }
+    .is-mobile .hero-text p, .is-mobile .hero-text .with-sannah { font-size: 0.95rem; }
+    .is-mobile .section-header, .is-mobile .container { padding-left: 0.6rem; padding-right: 0.6rem; }
+    /* Further reduce sizes for very narrow screens */
+    @media (max-width: 380px) {
+      .is-mobile .sabai { font-size: 42px; }
+      .is-mobile .form { font-size: 34px; }
+      .is-mobile .fitness { font-size: 28px; }
+      .is-mobile .hero-text h1 { font-size: 1.35rem; }
+      .is-mobile .hero-text p, .is-mobile .hero-text .with-sannah { font-size: 0.92rem; }
+      .is-mobile .btn { padding: 0.7rem 1rem; font-size: 0.9rem; }
+      .is-mobile .feature-card { padding: 1rem; }
+    }
+
     /* Reveal on-scroll animations */
     .reveal {
       --rx: 0px; /* reveal translateX */
@@ -1409,8 +1430,7 @@
         var deco = document.querySelectorAll('.deco-circle, .cherry-accent, .info-bar, .features .icon');
         deco.forEach(function(el){ el.style.display = 'none'; });
 
-        // shorten hero paddings on mobile
-        document.querySelectorAll('.hero, .hero-content').forEach(function(el){ el.style.padding = ''; });
+        // leave CSS-controlled paddings intact (was removing padding and causing left-aligned content)
       }
     })();
     // Sticky header shadow
