@@ -66,7 +66,6 @@
       overflow-x: hidden;
     }
 
-    /* Typography */
     h1, h2, h3 {
       font-family: 'Bricolage Grotesque', 'Archivo Black', system-ui, sans-serif;
       font-weight: 700;
@@ -209,7 +208,6 @@
       padding: 7rem 1.5rem 4rem;
       position: relative;
       overflow: hidden;
-      /* diagonal striped background (45deg) applied only to the hero */
       background-color: #fdcde5;
       background-image: repeating-linear-gradient(45deg, rgba(255,0,106,0.08) 0 10px, transparent 10px 30px), linear-gradient(160deg, rgba(253,248,243,0.85) 0%, rgba(248,225,231,0.65) 45%, rgba(245,237,228,0.85) 100%);
       background-size: 82px 82px, cover;
@@ -368,15 +366,12 @@
       background: transparent !important;
     }
 
-    /* Ensure ambient animations or pulses don't reintroduce shadows/backgrounds */
     .hero-image .brand-card.ambient-pulse,
     .hero-image .brand-card.floaty {
       animation: none !important;
       box-shadow: none !important;
       background: transparent !important;
     }
-
-    .hero-image .brand-card.ambient-pulse { will-change: transform, box-shadow; }
 
     .hero-image .deco-circle {
       position: absolute;
@@ -399,7 +394,6 @@
       filter: drop-shadow(0 4px 8px rgba(0,0,0,0.12));
     }
 
-    /* Ambient animations */
     @keyframes floaty {
       0% { transform: translateY(0); }
       50% { transform: translateY(-8px); }
@@ -430,9 +424,6 @@
     .ambient-pulse {
       animation: gentle-pulse 6s ease-in-out infinite;
     }
-
-    /* small parallax transforms applied by JS (reduced-motion safe) */
-    .parallax-x { transform: translate3d(var(--px,0px), var(--py,0px), 0); }
 
     @media (prefers-reduced-motion: reduce) {
       .ambient-rotate, .floaty, .ambient-pulse { animation: none !important; }
@@ -828,44 +819,107 @@
       color: var(--blush);
     }
 
-    /* Mobile */
+    /* ========== STRONG MOBILE CENTERING FIX ========== */
     @media (max-width: 900px) {
+      /* Kill horizontal reveal shift on mobile so nothing sits left */
+      .reveal,
+      .reveal.from-left,
+      .reveal.from-right,
+      .reveal.from-bottom {
+        --rx: 0px !important;
+        --ry: 12px;
+      }
+
       .hero-content {
         grid-template-columns: 1fr;
-        text-align: center;
-        gap: 2.5rem;
+        text-align: center !important;
+        gap: 2rem;
+        padding: 0 1.25rem;
+        justify-items: center;
+      }
+
+      .hero-text {
+        text-align: center !important;
+        width: 100%;
       }
 
       .hero-text p {
-        margin-left: auto;
-        margin-right: auto;
+        margin-left: auto !important;
+        margin-right: auto !important;
+        max-width: 100%;
+        text-align: center;
       }
 
       .hero-cta {
-        justify-content: center;
+        justify-content: center !important;
       }
 
       .all-sizes {
-        margin-left: auto;
-        margin-right: auto;
+        margin-left: auto !important;
+        margin-right: auto !important;
+      }
+
+      .hero-image {
+        width: 100%;
+        display: flex;
+        justify-content: center;
       }
 
       .info-bar-inner {
         grid-template-columns: repeat(2, 1fr);
-        gap: 1.2rem;
+        gap: 1.25rem;
+        text-align: center;
       }
 
       .about-grid {
         grid-template-columns: 1fr;
-        gap: 2.5rem;
+        gap: 2rem;
+        text-align: center;
+      }
+
+      .about-text {
+        text-align: center !important;
+      }
+
+      .about-text p {
+        text-align: center;
       }
 
       .about-image {
         order: -1;
+        display: flex;
+        justify-content: center;
+      }
+
+      .credentials {
+        grid-template-columns: 1fr;
+        max-width: 320px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .cred-item {
+        justify-content: flex-start;
+        text-align: left;
       }
 
       .details-card {
         grid-template-columns: 1fr;
+        padding: 1.75rem 1.25rem;
+        text-align: center;
+      }
+
+      .details-card > div:first-child {
+        text-align: center;
+      }
+
+      .detail-list {
+        align-items: stretch;
+      }
+
+      .detail-row {
+        justify-content: flex-start;
+        text-align: left;
       }
 
       nav ul {
@@ -893,97 +947,133 @@
       .nav-cta {
         display: none;
       }
+
+      section {
+        padding: 3.5rem 1.25rem;
+      }
+
+      .container {
+        padding: 0 1.25rem;
+        max-width: 100%;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .section-header {
+        margin-bottom: 2rem;
+        text-align: center;
+      }
     }
 
     @media (max-width: 500px) {
       .info-bar-inner {
         grid-template-columns: 1fr 1fr;
-      }
-
-      .credentials {
-        grid-template-columns: 1fr;
+        gap: 1rem;
       }
 
       .hero {
-        padding-top: 6rem;
+        min-height: auto;
+        padding: 5.5rem 1.1rem 2.5rem;
       }
 
       .hero-image .brand-card {
-        max-width: 340px;
+        max-width: 280px;
+        margin: 0 auto;
       }
 
       .hero-image .deco-circle {
-        width: 300px;
-        height: 300px;
+        width: 260px;
+        height: 260px;
+      }
+
+      .hero-text h1 {
+        font-size: clamp(1.7rem, 7.5vw, 2.4rem);
+      }
+
+      .hero-text .with-sannah {
+        font-size: 1.1rem;
+      }
+
+      .hero-text .class-title {
+        font-size: 1.25rem;
+        padding: 0.4rem 1.1rem;
+      }
+
+      .feature-card {
+        padding: 1.4rem 1.1rem;
+      }
+
+      .details-card {
+        padding: 1.5rem 1.1rem;
+        gap: 1.25rem;
+      }
+
+      .details-cta .price {
+        font-size: 2.4rem;
       }
     }
 
-    /* Extra small screens adjustments */
     @media (max-width: 420px) {
-      header .nav-container { padding: 0.6rem 1rem; }
+      header .nav-container {
+        padding: 0.7rem 1rem;
+      }
 
       .hero {
-        padding: 4.5rem 0.9rem 2.5rem;
-        background-size: auto, cover;
+        padding: 5rem 1rem 2rem;
       }
 
       .hero-content {
-        gap: 1.2rem;
-        padding: 0 0.5rem;
+        gap: 1.5rem;
+        padding: 0 0.75rem;
       }
 
-      .hero-text h1 { font-size: clamp(1.6rem, 8vw, 2.4rem); }
-      .hero-text .with-sannah { font-size: 1rem; margin-bottom: 0.8rem; }
-      .hero-text p { font-size: 0.98rem; max-width: 100%; }
-
-      .hero-image .brand-card { max-width: 260px; }
-      .hero-image .deco-circle { display: none; }
-      .cherry-accent { font-size: 1.6rem; right: 8px; bottom: 8px; }
-
-      /* Scale splash text to fit small viewports */
-      .sabai { font-size: clamp(36px, 14vw, 80px); }
-      .form { font-size: clamp(28px, 12vw, 64px); margin-top: 4px; }
-      .fitness { font-size: clamp(22px, 10vw, 56px); margin-top: 4px; }
-      .petal { width: 10px; height: 10px; }
-
-      /* Reduce visual noise on small screens */
-      #splash { background: linear-gradient(180deg, rgba(255,255,255,0.98), rgba(255,255,255,0.98)); }
-      #glow { opacity: 0.45; }
-
-      /* Reduce large card shadows/spacing */
-      .details-card { padding: 1.6rem; gap: 1rem; }
-      .about-image img, .about-image { max-width: 320px; }
-      /* prevent header from overlapping content on small screens */
-      body { padding-top: 56px; }
-
-      /* allow hero to size to content on short mobile viewports */
-      .hero { min-height: auto; padding-bottom: 2rem; }
-
-      /* hide the full-screen splash on very small devices to avoid layout issues */
-      /* narrower than many phones; keeps desktop/tablet intro but avoids tiny-screen overflow */
-      @media (max-width: 360px) {
-        #splash { display: none !important; }
+      .hero-text h1 {
+        font-size: clamp(1.55rem, 8vw, 2.1rem);
       }
+
+      .hero-text .with-sannah {
+        font-size: 1rem;
+        margin-bottom: 0.7rem;
+      }
+
+      .hero-text p {
+        font-size: 0.95rem;
+      }
+
+      .hero-image .brand-card {
+        max-width: 240px;
+      }
+
+      .hero-image .deco-circle {
+        display: none;
+      }
+
+      .cherry-accent {
+        font-size: 1.5rem;
+      }
+
+      .sabai { font-size: clamp(34px, 13vw, 70px); }
+      .form  { font-size: clamp(26px, 11vw, 56px); margin-top: 3px; }
+      .fitness { font-size: clamp(20px, 9vw, 48px); margin-top: 3px; }
+      .petal { width: 9px; height: 9px; }
+
+      #splash { background: #fff; }
+      #glow { opacity: 0.4; }
+
+      .details-card { padding: 1.35rem 1rem; }
+      .about-image img { max-width: 100%; }
     }
 
     @media (max-width: 360px) {
-      /* Very small phones: keep layout usable and avoid overflow */
-      .logo-text { font-size: 1rem; }
-      .hero { padding-top: 4rem; }
-      .hero-text h1 { font-size: 1.5rem; }
-      .hero-image .brand-card { max-width: 220px; }
-      /* If mobile still looks bad, hide the intro overlay on the smallest devices */
-      /* Uncomment the next line to disable the splash entirely on tiny devices */
-      /* #splash { display: none !important; } */
+      .logo-text { font-size: 1.05rem; }
+      .hero { padding-top: 4.75rem; }
+      .hero-text h1 { font-size: 1.45rem; }
+      .hero-image .brand-card { max-width: 200px; }
     }
 
-    /* Mobile-specific utility when JS detects a mobile device */
+    /* Softened .is-mobile rules */
     .is-mobile .deco-circle,
-    .is-mobile .cherry-accent,
-    .is-mobile .hero-image .brand-card img,
-    .is-mobile .about-image img,
-    .is-mobile .features .feature-card .icon,
-    .is-mobile .info-bar {
+    .is-mobile .cherry-accent {
       display: none !important;
     }
 
@@ -991,43 +1081,62 @@
       display: flex !important;
       align-items: center;
       justify-content: center;
+      margin: 0 auto;
+      max-width: 260px;
       background: transparent !important;
-      padding: 0.6rem 0 !important;
+      padding: 0.5rem 0 !important;
     }
 
-    .brand-fallback {
-      font-family: 'Archivo Black', 'Bricolage Grotesque', system-ui, sans-serif;
-      color: var(--burgundy);
-      font-size: 1.25rem;
-      letter-spacing: 0.02em;
+    .is-mobile .hero-image .brand-card img {
+      display: block;
     }
 
-    /* Ensure containers keep horizontal padding so content stays centered */
-    .container { padding: 0 1rem; }
-    .hero-content { padding: 0 1rem; }
+    .is-mobile .about-image img {
+      display: block;
+      margin: 0 auto;
+    }
 
-    /* When JS marks .is-mobile, apply compact paddings and scale text for better fit */
-    .is-mobile .hero { padding: 4.5rem 0.9rem 2rem !important; }
-    .is-mobile .hero-content { gap: 1rem !important; padding: 0 0.75rem !important; }
-    .is-mobile .hero-text { text-align: center; }
-    .is-mobile .hero-text p, .is-mobile .hero-text .with-sannah { font-size: 0.95rem; }
-    .is-mobile .section-header, .is-mobile .container { padding-left: 0.6rem; padding-right: 0.6rem; }
-    /* Further reduce sizes for very narrow screens */
+    .is-mobile .features .feature-card .icon {
+      display: flex !important;
+    }
+
+    .is-mobile .info-bar {
+      display: block !important;
+    }
+
+    .is-mobile .hero {
+      padding: 5.25rem 1.1rem 2.25rem !important;
+    }
+
+    .is-mobile .hero-content {
+      gap: 1.5rem !important;
+      padding: 0 1rem !important;
+      text-align: center !important;
+    }
+
+    .is-mobile .hero-text {
+      text-align: center !important;
+    }
+
+    .is-mobile .section-header,
+    .is-mobile .container {
+      padding-left: 1rem;
+      padding-right: 1rem;
+    }
+
     @media (max-width: 380px) {
-      .is-mobile .sabai { font-size: 42px; }
-      .is-mobile .form { font-size: 34px; }
-      .is-mobile .fitness { font-size: 28px; }
-      .is-mobile .hero-text h1 { font-size: 1.35rem; }
-      .is-mobile .hero-text p, .is-mobile .hero-text .with-sannah { font-size: 0.92rem; }
-      .is-mobile .btn { padding: 0.7rem 1rem; font-size: 0.9rem; }
-      .is-mobile .feature-card { padding: 1rem; }
+      .is-mobile .hero-text h1 { font-size: 1.4rem; }
+      .is-mobile .hero-text p,
+      .is-mobile .hero-text .with-sannah { font-size: 0.93rem; }
+      .is-mobile .btn { padding: 0.75rem 1.15rem; font-size: 0.9rem; }
+      .is-mobile .feature-card { padding: 1.15rem 0.9rem; }
     }
 
     /* Reveal on-scroll animations */
     .reveal {
-      --rx: 0px; /* reveal translateX */
-      --ry: 18px; /* reveal translateY */
-      --rscale: 0.995; /* reveal scale */
+      --rx: 0px;
+      --ry: 18px;
+      --rscale: 0.995;
       opacity: 0;
       transform: translateX(var(--rx)) translateY(var(--ry)) scale(var(--rscale));
       transition: opacity 650ms cubic-bezier(.2,.9,.3,1), transform 650ms cubic-bezier(.2,.9,.3,1);
@@ -1045,7 +1154,6 @@
     .reveal.from-right { --rx: 22px; --ry: 0px; }
     .reveal.from-bottom { --rx: 0px; --ry: 28px; }
 
-    /* allow hover to nudge reveal using the same vars */
     .feature-card:hover {
       --ry: -6px;
       --rscale: 1.006;
@@ -1054,12 +1162,10 @@
       border-color: var(--blush);
     }
 
-    /* support stagger via data attribute */
     .reveal[data-reveal-delay] {
       transition-delay: var(--reveal-delay, 0ms);
     }
 
-    /* Subtle active animations site-wide */
     @keyframes icon-bob {
       0%{ transform: translateY(0) }
       50%{ transform: translateY(-4px) }
@@ -1095,7 +1201,7 @@
       .ambient-rotate, .floaty, .ambient-pulse, .features-grid .icon, .info-item .icon, .cred-item .icon, .hero { animation: none !important; }
     }
 
-    /* Intro / Splash styles (overlay) */
+    /* Intro / Splash styles */
     #splash {
       position: fixed; inset: 0; z-index: 9999;
       display: flex; flex-direction: column; align-items: center; justify-content: center;
@@ -1142,6 +1248,7 @@
 
     <div id="bar-track"><div id="bar-fill"></div></div>
   </div>
+
   <!-- Header -->
   <header id="header">
     <div class="nav-container">
@@ -1358,10 +1465,10 @@
   </footer>
 
   <script>
-    // Intro sequence (runs on page load, 5s total)
+    // Intro sequence
     (function () {
       var TOTAL_MS = 5000;
-      var progress = 0; // 0 -> 1
+      var progress = 0;
       var done = false;
       var last = null;
       var raf = null;
@@ -1381,8 +1488,7 @@
         if (last == null) last = ts;
         var dt = ts - last;
         last = ts;
-        var speed = 1;
-        progress += (dt / TOTAL_MS) * speed;
+        progress += (dt / TOTAL_MS);
 
         if (progress > 0.04) show(sabai);
         if (progress > 0.22) show(form);
@@ -1410,7 +1516,7 @@
       raf = requestAnimationFrame(step);
     })();
 
-    // Mobile detection: add `.is-mobile` class to <html> for CSS hooks and replace images with fallbacks
+    // Mobile detection – only hide pure decoration
     (function(){
       function isMobile() {
         if (navigator.userAgentData && navigator.userAgentData.mobile !== undefined) return navigator.userAgentData.mobile;
@@ -1420,20 +1526,22 @@
 
       if (isMobile()) {
         document.documentElement.classList.add('is-mobile');
-        // hide heavy images and show fallbacks
-        var brandImg = document.getElementById('brand-img');
-        var brandFallback = document.getElementById('brand-fallback');
-        if (brandImg) { brandImg.style.display = 'none'; }
-        if (brandFallback) { brandFallback.style.display = 'block'; }
 
-        // hide other decorative images that may break layout
-        var deco = document.querySelectorAll('.deco-circle, .cherry-accent, .info-bar, .features .icon');
+        var deco = document.querySelectorAll('.deco-circle, .cherry-accent');
         deco.forEach(function(el){ el.style.display = 'none'; });
 
-        // leave CSS-controlled paddings intact (was removing padding and causing left-aligned content)
+        var brandImg = document.getElementById('brand-img');
+        var brandFallback = document.getElementById('brand-fallback');
+        if (brandImg) {
+          brandImg.onerror = function() {
+            brandImg.style.display = 'none';
+            if (brandFallback) brandFallback.style.display = 'block';
+          };
+        }
       }
     })();
-    // Sticky header shadow
+
+    // Sticky header
     const header = document.getElementById('header');
     window.addEventListener('scroll', () => {
       header.classList.toggle('scrolled', window.scrollY > 20);
@@ -1446,12 +1554,11 @@
       menu.classList.toggle('open');
     });
 
-    // Close menu on link click
     menu.querySelectorAll('a').forEach(link => {
       link.addEventListener('click', () => menu.classList.remove('open'));
     });
 
-    // Reveal on-scroll using IntersectionObserver
+    // Reveal on-scroll
     (function() {
       const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       if (prefersReduced) {
@@ -1459,6 +1566,8 @@
         return;
       }
 
+      // On mobile we already zeroed the horizontal shift in CSS,
+      // so just make sure everything becomes visible
       const observer = new IntersectionObserver((entries, obs) => {
         entries.forEach(entry => {
           if (entry.isIntersecting) {
@@ -1469,9 +1578,7 @@
             obs.unobserve(el);
           }
         });
-      }, {
-        threshold: 0.12
-      });
+      }, { threshold: 0.08 });
 
       document.querySelectorAll('.reveal').forEach((el, idx) => {
         if (!el.hasAttribute('data-reveal-delay')) el.setAttribute('data-reveal-delay', String(20 * idx));
@@ -1479,22 +1586,18 @@
       });
     })();
 
-      // Ambient anims + gentle mouse parallax
-      (function(){
-        const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-        if (prefersReduced) return;
+    // Ambient anims
+    (function(){
+      const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (prefersReduced) return;
 
-        // add ambient classes
-        const deco = document.querySelector('.hero-image .deco-circle');
-        const brand = document.querySelector('.hero-image .brand-card');
-        const cherry = document.querySelector('.hero-image .cherry-accent');
-        if (deco) deco.classList.add('ambient-rotate');
-        if (brand) brand.classList.add('floaty', 'ambient-pulse');
-        if (cherry) cherry.classList.add('floaty');
-
-        // mouse parallax has been intentionally disabled to keep decorative items static
-        // (previous implementation added subtle translate transforms on mousemove)
-      })();
+      const deco = document.querySelector('.hero-image .deco-circle');
+      const brand = document.querySelector('.hero-image .brand-card');
+      const cherry = document.querySelector('.hero-image .cherry-accent');
+      if (deco) deco.classList.add('ambient-rotate');
+      if (brand) brand.classList.add('floaty', 'ambient-pulse');
+      if (cherry) cherry.classList.add('floaty');
+    })();
   </script>
 </body>
 </html>
