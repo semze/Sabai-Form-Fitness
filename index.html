@@ -977,6 +977,31 @@
       /* #splash { display: none !important; } */
     }
 
+    /* Mobile-specific utility when JS detects a mobile device */
+    .is-mobile .deco-circle,
+    .is-mobile .cherry-accent,
+    .is-mobile .hero-image .brand-card img,
+    .is-mobile .about-image img,
+    .is-mobile .features .feature-card .icon,
+    .is-mobile .info-bar {
+      display: none !important;
+    }
+
+    .is-mobile .brand-card {
+      display: flex !important;
+      align-items: center;
+      justify-content: center;
+      background: transparent !important;
+      padding: 0.6rem 0 !important;
+    }
+
+    .brand-fallback {
+      font-family: 'Archivo Black', 'Bricolage Grotesque', system-ui, sans-serif;
+      color: var(--burgundy);
+      font-size: 1.25rem;
+      letter-spacing: 0.02em;
+    }
+
     /* Reveal on-scroll animations */
     .reveal {
       --rx: 0px; /* reveal translateX */
@@ -1141,7 +1166,8 @@
       <div class="hero-image reveal from-right" data-reveal-delay="120">
         <div class="deco-circle"></div>
         <div class="brand-card">
-          <img src="sannah.png" alt="Sabai Form Fitness logo and branding">
+          <img src="sannah.png" alt="Sabai Form Fitness logo and branding" id="brand-img">
+          <div class="brand-fallback" id="brand-fallback" style="display:none">Sabai Form Fitness</div>
         </div>
         <div class="cherry-accent">🍒</div>
       </div>
@@ -1361,6 +1387,31 @@
       }
 
       raf = requestAnimationFrame(step);
+    })();
+
+    // Mobile detection: add `.is-mobile` class to <html> for CSS hooks and replace images with fallbacks
+    (function(){
+      function isMobile() {
+        if (navigator.userAgentData && navigator.userAgentData.mobile !== undefined) return navigator.userAgentData.mobile;
+        var ua = navigator.userAgent || navigator.vendor || window.opera;
+        return /android|iphone|ipad|ipod|windows phone|iemobile|opera mini/i.test(ua.toLowerCase());
+      }
+
+      if (isMobile()) {
+        document.documentElement.classList.add('is-mobile');
+        // hide heavy images and show fallbacks
+        var brandImg = document.getElementById('brand-img');
+        var brandFallback = document.getElementById('brand-fallback');
+        if (brandImg) { brandImg.style.display = 'none'; }
+        if (brandFallback) { brandFallback.style.display = 'block'; }
+
+        // hide other decorative images that may break layout
+        var deco = document.querySelectorAll('.deco-circle, .cherry-accent, .info-bar, .features .icon');
+        deco.forEach(function(el){ el.style.display = 'none'; });
+
+        // shorten hero paddings on mobile
+        document.querySelectorAll('.hero, .hero-content').forEach(function(el){ el.style.padding = ''; });
+      }
     })();
     // Sticky header shadow
     const header = document.getElementById('header');
